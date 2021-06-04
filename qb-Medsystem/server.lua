@@ -8,8 +8,8 @@ AddEventHandler('medSystem:print', function(req, pulse, area, blood, x, y, z, bl
 	local xPlayer = QBCore.Functions.GetPlayer(src)
 	--local  =  ESX.GetPlayerFromId(_source)
 	Wait(100)
-	local name = Player.PlayerData.charinfo.firstname
-	local lastname = Player.PlayerData.charinfo.lastname
+	local name = xPlayer.PlayerData.charinfo.firstname
+	local lastname = xPlayer.PlayerData.charinfo.lastname
 	
 	
 	local xPlayers = QBCore.Functions.GetPlayers()
