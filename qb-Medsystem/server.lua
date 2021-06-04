@@ -5,7 +5,7 @@ RegisterServerEvent('medSystem:print')
 AddEventHandler('medSystem:print', function(req, pulse, area, blood, x, y, z, bleeding)
 
 	local src = source
-	local xPlayer = VirusCore.Functions.GetPlayer(src)
+	local xPlayer = QBCore.Functions.GetPlayer(src)
 	--local  =  ESX.GetPlayerFromId(_source)
 	Wait(100)
 	local name = Player.PlayerData.charinfo.firstname
