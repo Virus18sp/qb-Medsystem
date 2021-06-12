@@ -26,36 +26,31 @@ local cArea = ""
 local cBleeding = "NONE"
 
 RegisterCommand('getpulse', function(source, args)
-	local health = GetEntityHealth(GetPlayerPed(-1))
+	local health = GetEntityHealth(PlayerPedId())
 	if health > 0 then
 		pulse = (health / 4 + math.random(19, 28)) 
 	end
 	
-	print(pulse)
-	local hit, bone = GetPedLastDamageBone(GetPlayerPed(-1))
-	print(bone)
-	
+	local hit, bone = GetPedLastDamageBone(PlayerPedId())
 end, false)
 
 AddEventHandler('hospital:server:SetDeathStatus', function(bool)
 	if bool then
 		multi = 2.0
 		blood = 100
-		health = GetEntityHealth(GetPlayerPed(-1))
+		health = GetEntityHealth(PlayerPedId())
 		area = "LEGS/ARMS"
-		local hit, bone = GetPedLastDamageBone(GetPlayerPed(-1))
+		local hit, bone = GetPedLastDamageBone(PlayerPedId())
 		bleeding = 1
 		if (bone == 31086) then
 			multi = 0.0
-			print('HEADSHOT')
-			TriggerEvent('chatMessage', "MedSystem", {255, 0, 0}, "You have been shot/damaged in HEAD area")
+			TriggerEvent('chatMessage', "MedSystem", {255, 0, 0}, "You have been shot/damaged in the HEAD area")
 			bleeding = 5
 			area = "HEAD"
 		end
 		if bone == 24817 or bone == 24818 or bone == 10706 or bone == 24816 or bone == 11816 then
 			multi = 1.0
-			print('BODYSHOT')
-			TriggerEvent('chatMessage', "MedSystem", {255, 0, 0}, "You have been shot/damaged in BODY area")
+			TriggerEvent('chatMessage', "MedSystem", {255, 0, 0}, "You have been shot/damaged in the BODY area")
 			bleeding = 2
 			area = "BODY"
 		end
@@ -68,7 +63,7 @@ end)
 Citizen.CreateThread( function()
 while true do
 	Wait(5000)
-	local hp = GetEntityHealth(GetPlayerPed(-1))
+	local hp = GetEntityHealth(PlayerPedId())
 	if hp >= 1 and dead then
 		dead = false
 		bleeding = 0
@@ -99,7 +94,7 @@ RegisterNetEvent('medSystem:near')
 AddEventHandler('medSystem:near', function(x,y,z, pulse, blood, nameF, nameL, area, bldn)
 		
 	
-	local a,b,c = GetEntityCoords(GetPlayerPed(-1))
+	local a,b,c = GetEntityCoords(PlayerPedId())
 	
 	if #(vector3(x,y,z) - vector3(a,b,c)) < 10 then
 		timer = 10
@@ -133,7 +128,7 @@ AddEventHandler('medSystem:near', function(x,y,z, pulse, blood, nameF, nameL, ar
 
 end)
 
-Citizen.CreateThread( function()
+Citizen.CreateThread(function()
 	while true do
 		Wait(1)
 			while timer >= 1 do
@@ -146,7 +141,7 @@ Citizen.CreateThread( function()
 	end
 end)
 
-Citizen.CreateThread( function()
+Citizen.CreateThread(function()
 	while true do
 		Wait(1000)
 		if timer >= 1 then
@@ -157,15 +152,11 @@ end)
 
 RegisterNetEvent('medSystem:send')
 AddEventHandler('medSystem:send', function(req)
-		
-	
-	local health = GetEntityHealth(GetPlayerPed(-1))
+	local health = GetEntityHealth(PlayerPedId())
 	if health > 0 then
 		pulse = (health / 4 + math.random(19, 28)) 
 	end
-	local a, b, c = table.unpack(GetEntityCoords(GetPlayerPed(-1)))
+	local a, b, c = table.unpack(GetEntityCoords(PlayerPedId()))
 
-	print(a)
 	TriggerServerEvent('medSystem:print', req, math.floor(pulse * (blood / 90)), area, blood, a, b, c, bleeding)
-
 end)
