@@ -1,13 +1,6 @@
 -- MedSystem Converted by ViRuS --
 
-QBCore = nil
-Citizen.CreateThread(function() 
-    while QBCore == nil do
-        TriggerEvent("QBCore:GetObject", function(obj) QBCore = obj end)    
-        Citizen.Wait(200)
-    end
-end)
-
+QBCore = exports['qb-core']:GetCoreObject()
 local health
 local multi
 local pulse = 70
@@ -90,8 +83,7 @@ function DrawAdvancedText(x,y ,w,h,sc, text, r,g,b,a,font,jus)
 	DrawText(x - 0.1+w, y - 0.02+h)
 end
 
-RegisterNetEvent('medSystem:near')
-AddEventHandler('medSystem:near', function(x,y,z, pulse, blood, nameF, nameL, area, bldn)
+RegisterNetEvent('medSystem:near', function(x,y,z, pulse, blood, nameF, nameL, area, bldn)
 		
 	
 	local a,b,c = GetEntityCoords(PlayerPedId())
@@ -150,8 +142,7 @@ Citizen.CreateThread(function()
 	end
 end)
 
-RegisterNetEvent('medSystem:send')
-AddEventHandler('medSystem:send', function(req)
+RegisterNetEvent('medSystem:send', function(req)
 	local health = GetEntityHealth(PlayerPedId())
 	if health > 0 then
 		pulse = (health / 4 + math.random(19, 28)) 
