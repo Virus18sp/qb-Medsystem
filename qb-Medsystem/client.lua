@@ -27,7 +27,7 @@ RegisterCommand('getpulse', function(source, args)
 	local hit, bone = GetPedLastDamageBone(PlayerPedId())
 end, false)
 
-AddEventHandler('hospital:server:SetDeathStatus', function(bool)
+RegisterNetEvent('vir-medsystem:SetDeathStatus', function(bool)
 	if bool then
 		multi = 2.0
 		blood = 100
