@@ -28,3 +28,9 @@ RegisterCommand('med', function(source, args)
 	end
 	
 end)
+
+RegisterNetEvent('hospital:server:SetDeathStatus', function(isDead)
+	local src = source
+	if not src then return end
+	TriggerClientEvent("vir-medsystem:SetDeathStatus", src, isDead)
+end)
